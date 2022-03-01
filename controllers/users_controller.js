@@ -1,9 +1,22 @@
 const User = require('../models/user');
 
 module.exports.profile = function (req, res) {
-    return res.render('user_profile', {
-        title: "User"
-    });
+    if(req.cookies.user_id) {
+        User.findById(req.cookies.user_id, function(err, user) {
+            if(user) {
+                return res.render('user_profile', {
+                    title: "User",
+                    user: user
+                });
+            }
+            else {
+                return res.redirect('/users/sign-in');
+            }
+        });
+    }
+    else {
+        return res.redirect('/users/sign-in');
+    }
 }
 
 // render the sign up page
@@ -64,8 +77,14 @@ module.exports.createSession = function(req, res) {
         }
         else {
             // handle user not found
-            console.log("User doesn't exits");
+            console.log("User doesn't exist");
             return res.redirect('back');
         }
     });
+}
+
+// sign out the user
+module.exports.signOut = function(req, res) {
+    res.cookie("user_id", "", { expires: new Date(0),domain:'localhost', path: '/' });
+    return res.redirect('/users/sign-in');
 }
