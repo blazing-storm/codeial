@@ -1,4 +1,12 @@
+* {
+  margin: 0; }
+
+html {
+  height: 100%; }
+
 body {
-    margin: 0;
-    /* text-align: center; */
-}
+  height: 100%;
+  width: 100%;
+  background: lightblue; }
+  body #layout-main {
+    height: 100%; }

@@ -1,0 +1,25 @@
+#layout-header {
+  background-color: #1186F0;
+  color: white;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    justify-content: space-between;
+
+    li {
+      padding-right: 8px;
+      
+      a {
+        color: inherit;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    }
+  }
+}

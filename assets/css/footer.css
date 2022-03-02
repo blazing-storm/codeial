@@ -1,0 +1,15 @@
+#layout-footer {
+  background-color: #747474;
+  color: white;
+  padding: 10px 0;
+  display: flex; }
+  #layout-footer > * {
+    padding-right: 16px; }
+  #layout-footer ul {
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column; }
+    #layout-footer ul li a {
+      color: inherit;
+      text-decoration: none; }
