@@ -8,7 +8,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 app.use(express.urlencoded());
 app.use(cookieParser());
@@ -28,7 +28,7 @@ app.set('views', './views');
 // app.set('views', path.join(__dirname, 'views'));
 
 // mongo store is used to store the session cookie in the db
-// connect-mongo is not working because this syntax is outdated (v3 vs v4)
+// Solved the mongo store issue(v3 vs v4) using client instead of mongooseConnection
 app.use(session({
     name: 'codeial',
     // TODO change the secret before deployment in production mode
@@ -38,9 +38,10 @@ app.use(session({
     cookie: {
         maxAge: (1000 * 60 * 100)
     },
-    store: new MongoStore(
+    store: MongoStore.create(
         {
-            mongooseConnection: db,
+            client: db.getClient(),
+            // mongooseConnection: db,
             autoRemove: 'disabled'
         },
         function(err) {
