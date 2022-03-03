@@ -68,12 +68,17 @@ module.exports.update = function(req, res) {
 
 // sign in and create a session for the user
 module.exports.createSession = function(req, res) {
+    req.flash('success', 'Logged in Successfully!');
     return res.redirect('/');
 }
 
 // destroy the session and sign out the user
 module.exports.destroySession = function(req, res) {
     req.logout();
+    req.flash('success', 'You have logged out!');
 
     return res.redirect('/');
+
+    // One way to add flash to the res
+    // return res.redirect('/', {flash: {success: "You have logged out"}});
 }
