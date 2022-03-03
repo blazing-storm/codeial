@@ -54,6 +54,18 @@ module.exports.create = function(req, res) {
     });
 }
 
+// update the user profile
+module.exports.update = function(req, res) {
+    if(req.user.id == req.params.id) {
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user) {
+            return res.redirect('back');
+        });
+    }
+    else {
+        return res.status(401).send('Unauthorized');
+    }
+}
+
 // sign in and create a session for the user
 module.exports.createSession = function(req, res) {
     return res.redirect('/');
