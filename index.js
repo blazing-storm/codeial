@@ -1,5 +1,6 @@
 const express = require('express');
 const env = require('./config/environment');
+const logger = require('morgan');
 
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -26,17 +27,22 @@ console.log('Chat Server is listening on port: 5000');
 
 const path = require('path');
 
-// gets compiled when the page loads
-app.use(sassMiddleware({
-    src: path.join(__dirname, env.asset_path, 'scss'),
-    dest: path.join(__dirname, env.asset_path, 'css'),
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
-}));
+if(env.name == 'development') {
+    // gets compiled when the page loads
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path, 'scss'),
+        dest: path.join(__dirname, env.asset_path, 'css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }));
+}
 
 app.use(express.urlencoded());
 app.use(cookieParser());
+
+// logging
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 // add this before router
 app.use(expressLayouts);
